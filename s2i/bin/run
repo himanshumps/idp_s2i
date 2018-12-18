@@ -1,0 +1,4 @@
+for entry in /deployments/*.jar
+do
+  java -jar $entry
+done

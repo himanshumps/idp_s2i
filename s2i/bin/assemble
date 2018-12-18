@@ -1,0 +1,13 @@
+#!/bin/bash -e
+
+cd /tmp/src
+# Run any custom scripts
+if [[ -f "openshift_scripts.sh" ]];
+then
+	echo "------------- Running custom scripts -------------"
+	/bin/bash openshift_scripts.sh
+fi
+
+# Do a maven build
+mvn -e -DskipTests -Djava.net.preferIPv4Stack=true clean install
+cp target/*.jar /deployments/
