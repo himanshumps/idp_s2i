@@ -20,7 +20,7 @@ LABEL \
 EXPOSE 8778 8080 8443
 
 USER root
-RUN yum install -y rh-maven35 npm \
+RUN yum install -y --disablerepo=\* --enablerepo=jboss-rhel-os --enablerepo=jboss-rhel-rhscl rh-maven35 npm \
     && yum clean all && rm -rf /var/cache/yum && \
     rpm -q  rh-maven35 npm
 
