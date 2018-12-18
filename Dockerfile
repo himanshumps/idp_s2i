@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.3
+FROM fedora
 
 ENV \
     PATH="$PATH:"/usr/local/s2i""
@@ -21,9 +21,9 @@ EXPOSE 8778 8080 8443
 
 USER root
 
-RUN subscription-manager attach --auto && yum install -y --enablerepo=jboss-rhel-os --enablerepo=jboss-rhel-rhscl rh-maven35 npm \
-    && yum clean all && rm -rf /var/cache/yum && \
-    rpm -q  rh-maven35 npm
+RUN yum install -y install tar gzip java java-devel npm && yum clean all 
+
+ENV JAVA_HOME /usr/lib/jvm/java-openjdk
 
 COPY ./s2i/bin/ /usr/local/s2i
 
