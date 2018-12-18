@@ -21,7 +21,7 @@ EXPOSE 8778 8080 8443
 
 USER root
 
-RUN yum -y install tar gzip java java-devel nodejs npm && yum clean all && npm install -g @angular/cli@6.0 
+RUN yum -y install tar gzip java java-devel nodejs npm bzip2 && yum clean all && npm install -g @angular/cli@6.0 
 
 ENV JAVA_HOME /usr/lib/jvm/java-openjdk
 
