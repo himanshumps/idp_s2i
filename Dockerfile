@@ -21,9 +21,7 @@ EXPOSE 8778 8080 8443
 
 USER root
 
-RUN subscription-manager attach --auto
-
-RUN yum install -y --disablerepo=\* --enablerepo=jboss-rhel-os --enablerepo=jboss-rhel-rhscl rh-maven35 npm \
+RUN subscription-manager attach --auto && yum install -y --enablerepo=jboss-rhel-os --enablerepo=jboss-rhel-rhscl rh-maven35 npm \
     && yum clean all && rm -rf /var/cache/yum && \
     rpm -q  rh-maven35 npm
 
