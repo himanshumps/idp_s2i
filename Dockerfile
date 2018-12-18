@@ -21,7 +21,7 @@ EXPOSE 8778 8080 8443
 
 USER root
 
-RUN yum install -y install tar gzip java java-devel npm && yum clean all 
+RUN yum -y install tar gzip java java-devel npm && yum clean all 
 
 ENV JAVA_HOME /usr/lib/jvm/java-openjdk
 
