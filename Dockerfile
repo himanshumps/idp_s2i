@@ -29,6 +29,6 @@ COPY ./s2i/bin/ /usr/local/s2i
 
 RUN mkdir /deployments /.npm
 
-RUN chown -R 185:185 /usr/local/s2i /tmp /deployments /.npm
+RUN chown -R 185:185 /usr/local/s2i /tmp /deployments /.npm && chmod -R 777 /usr/local/s2i /tmp /deployments /.npm
 
 USER 185	
