@@ -21,9 +21,17 @@ EXPOSE 8778 8080 8443
 
 USER root
 
+ENV MAVEN_VERSION 3.5.4
+
+RUN curl -sSL http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar xzf - -C /usr/share \
+&& mv /usr/share/apache-maven-$MAVEN_VERSION /usr/share/maven \
+&& ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
+
 RUN yum -y install tar gzip java java-devel nodejs npm bzip2 && yum clean all && npm install -g @angular/cli@6.0 
 
 ENV JAVA_HOME /usr/lib/jvm/java-openjdk
+
+ENV M2_HOME /usr/share/maven
 
 COPY ./s2i/bin/ /usr/local/s2i
 
