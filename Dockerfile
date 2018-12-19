@@ -38,7 +38,7 @@ RUN ls -al /usr/libexec/s2i/
 
 RUN chown -R 1001:1001 /usr/libexec/s2i/
 
-RUN chmod -R 777 /usr/libexec/s2i/ /tmp /deployments /npm /.npm  /.config
+RUN chmod -R 777 /usr/libexec/s2i/ /tmp /deployments /.npm  /.config
 
 RUN ls -al /usr/libexec/s2i/
 
