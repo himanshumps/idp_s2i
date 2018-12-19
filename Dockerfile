@@ -37,7 +37,7 @@ RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash -
 
 RUN yum -y install tar gzip java java-devel bzip2 python python2 python-pip gcc-c++ make nodejs && yum clean all
 
-RUN chmod -R 777 /npm && npm install -g @angular/cli@1.6.8 && npm link @angular/cli@1.6.8
+#RUN sudo chmod -R 777 /npm && npm install -g @angular/cli@1.6.8 && npm link @angular/cli@1.6.8
 
 COPY ./s2i/bin/ /usr/local/s2i 
 
