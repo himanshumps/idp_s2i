@@ -35,7 +35,7 @@ ENV M2_HOME /usr/share/maven
 
 COPY ./s2i/bin/ /usr/local/s2i
 
-RUN mkdir /deployments /.npm
+RUN mkdir /deployments /.npm /usr/lib/node_modules/@angular/
 
 RUN chown -R root:root /usr/lib/node_modules /usr/lib/node_modules/@angular/
 
