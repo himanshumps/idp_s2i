@@ -60,6 +60,8 @@ COPY ./s2i/bin/ /
 
 RUN ls -al /usr/libexec/s2i
 
+RUN chown -R 185:185 /usr/libexec/s2i
+
 RUN chmod -R 777 /usr/libexec/s2i /tmp /deployments /npm /.npm  /.config
 
 RUN ls -al /usr/libexec/s2i
