@@ -35,10 +35,13 @@ ENV M2_HOME /usr/share/maven
 
 COPY ./s2i/bin/ /usr/local/s2i
 
-RUN mkdir /deployments /.npm /usr/lib/node_modules
+RUN mkdir /deployments /.npm
+
+USER root
+RUN npm install -g @angular/cli@1.6.8 && npm link @angular/cli@1.6.8
 
 RUN chown -R 185:185 /usr/local/s2i /tmp /deployments /.npm && chmod -R 777 /usr/local/s2i /tmp /deployments /.npm /usr/lib/node_modules
 
-RUN npm install -g @angular/cli@1.6.8 && npm link @angular/cli@1.6.8
+
 
 USER 185	
