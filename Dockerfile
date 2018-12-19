@@ -27,7 +27,7 @@ RUN curl -sSL http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binari
 && mv /usr/share/apache-maven-$MAVEN_VERSION /usr/share/maven \
 && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 
-RUN yum -y install tar gzip java java-devel nodejs npm bzip2 && yum clean all
+RUN yum -y install tar gzip java java-devel nodejs npm bzip2 python python2 python-pip && yum clean all
 
 ENV JAVA_HOME /usr/lib/jvm/java-openjdk
 
