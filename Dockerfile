@@ -27,7 +27,9 @@ RUN curl -sSL http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binari
 && mv /usr/share/apache-maven-$MAVEN_VERSION /usr/share/maven \
 && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 
-RUN yum -y install tar gzip java java-devel nodejs npm bzip2 python python2 python-pip && yum clean all
+RUN yum -y install tar gzip java java-devel bzip2 python python2 python-pip gcc-c++ make && yum clean all
+
+RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash -
 
 ENV JAVA_HOME /usr/lib/jvm/java-openjdk
 
@@ -35,11 +37,8 @@ ENV M2_HOME /usr/share/maven
 
 COPY ./s2i/bin/ /usr/local/s2i
 
-RUN mkdir /deployments /.npm /usr/lib/node_modules/@angular/
+RUN mkdir /deployments /.npm 
 
-RUN chown -R root:root /usr/lib/node_modules /usr/lib/node_modules/@angular/
-
-USER root
 RUN npm install -g @angular/cli@1.6.8 && npm link @angular/cli@1.6.8
 
 RUN chown -R 185:185 /usr/local/s2i /tmp /deployments /.npm && chmod -R 777 /usr/local/s2i /tmp /deployments /.npm /usr/lib/node_modules
