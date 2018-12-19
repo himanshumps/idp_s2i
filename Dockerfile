@@ -27,7 +27,7 @@ ENV JAVA_HOME /usr/lib/jvm/java-openjdk
 
 ENV M2_HOME /usr/share/maven
 
-RUN mkdir /deployments /.npm && && chmod -R 777 /tmp /deployments /.npm
+RUN mkdir /deployments /.npm && chmod -R 777 /tmp /deployments /.npm
 
 RUN curl -sSL http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar xzf - -C /usr/share \
 && mv /usr/share/apache-maven-$MAVEN_VERSION /usr/share/maven \
