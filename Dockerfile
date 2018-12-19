@@ -7,8 +7,8 @@ LABEL \
       io.k8s.display-name="IDP Applications"  \
       io.openshift.expose-services="8778/tcp:uec,8080/tcp:webcache,8443/tcp:pcsync-https"  \
       io.openshift.s2i.destination="/tmp"  \
-      io.openshift.s2i.scripts-url="image:///usr/libexec/s2i"  \
-	  io.s2i.scripts-url=image:///usr/libexec/s2i \
+      io.openshift.s2i.scripts-url="image:///s2i"  \
+	  io.s2i.scripts-url=image:///s2i \
       io.openshift.tags="builder,java,idp"  \
       name="idp-openshift"  \
       org.jboss.deployments-dir="/deployments"  \
@@ -21,7 +21,7 @@ ENV MAVEN_VERSION 3.5.4
 
 ENV MAVEN_HOME /usr/lib/mvn
 
-ENV PATH $MAVEN_HOME/bin:/usr/libexec/s2i:$PATH
+ENV PATH $MAVEN_HOME/bin:/s2i:$PATH
 
 #ENV NPM_CONFIG_PREFIX /npm
 
@@ -58,12 +58,14 @@ RUN set -x \
 	
 COPY ./s2i/bin/ / 
 
-RUN ls -al /usr/libexec/s2i
+RUN ls -al /s2i
 
-RUN chown -R 185:185 /usr/libexec/s2i
+RUN chown -R 185:185 /s2i
 
-RUN chmod -R 777 /usr/libexec/s2i /tmp /deployments /npm /.npm  /.config
+RUN chmod -R 777 /s2i /tmp /deployments /npm /.npm  /.config
 
-RUN ls -al /usr/libexec/s2i
+RUN ls -al /s2i
 
 USER 185	
+
+RUN ls -al /s2i
