@@ -57,6 +57,8 @@ RUN set -x \
 	
 COPY ./s2i/bin/ / 
 
+RUN ls -al /usr/local/s2i
+
 RUN chmod -R 777 /usr/local/s2i /tmp /deployments /npm /.npm  /.config
 
 USER 185	
