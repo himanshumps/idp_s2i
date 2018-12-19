@@ -26,7 +26,7 @@ ENV PATH $MAVEN_HOME/bin:/usr/local/s2i:$PATH
 
 ENV M2_HOME /usr/lib/mvn
 
-RUN mkdir -p /deployments /npm /npm/lib/node_modules/@angular/cli/node_modules/node-sass/vendor /usr/local/s2i /.npm  /.config && chmod -R 777 /tmp /deployments /npm /usr/local/s2i /.npm /.config
+RUN mkdir -p /deployments /npm /npm/lib/node_modules/@angular/cli/node_modules/node-sass/vendor  /.npm  /.config && chmod -R 777 /tmp /deployments /npm  /.npm /.config
 
 RUN wget http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz && \
 tar -zxvf apache-maven-$MAVEN_VERSION-bin.tar.gz && \
@@ -55,12 +55,6 @@ RUN set -x \
 	&& [ "$JAVA_HOME" = "$(docker-java-home)" ]
 	
 	
-#RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash -
-
-#RUN yum -y install java java-devel bzip2 nodejs && yum clean all
-
-#RUN sudo chmod -R 777 /npm && npm install -g @angular/cli@1.6.8 && npm link @angular/cli@1.6.8
-
 COPY ./s2i/bin/ / 
 
 RUN chmod -R 777 /usr/local/s2i /tmp /deployments /npm /.npm  /.config
