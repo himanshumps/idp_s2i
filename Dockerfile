@@ -35,7 +35,9 @@ RUN curl -sSL http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binari
 
 RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash -
 
-RUN yum -y install tar gzip java java-devel bzip2 python python2 python-pip gcc-c++ make nodejs && yum clean all
+RUN yum -y install nodejs
+
+RUN dnf install tar gzip java java-devel bzip2 python python2 python-pip gcc-c++ make && dnf clean all
 
 #RUN sudo chmod -R 777 /npm && npm install -g @angular/cli@1.6.8 && npm link @angular/cli@1.6.8
 
