@@ -1,4 +1,4 @@
-FROM alexsuch/angular-cli:6.2
+FROM centos/nodejs-8-centos7
 
 # Labels
 LABEL \
@@ -7,8 +7,8 @@ LABEL \
       io.k8s.display-name="IDP Applications"  \
       io.openshift.expose-services="8778/tcp:uec,8080/tcp:webcache,8443/tcp:pcsync-https"  \
       io.openshift.s2i.destination="/tmp"  \
-      io.openshift.s2i.scripts-url="image:///s2i"  \
-	  io.s2i.scripts-url=image:///s2i \
+      io.openshift.s2i.scripts-url="image:///usr/libexec/s2i"  \
+	  io.s2i.scripts-url=image:///usr/libexec/s2i \
       io.openshift.tags="builder,java,idp"  \
       name="idp-openshift"  \
       org.jboss.deployments-dir="/deployments"  \
@@ -17,55 +17,28 @@ LABEL \
 
 EXPOSE 8778 8080 8443
 
-ENV MAVEN_VERSION 3.5.4
+ENV MAVEN_HOME /usr/local/src/apache-maven
 
-ENV MAVEN_HOME /usr/lib/mvn
+ENV M2_HOME /usr/local/src/apache-maven
 
-ENV PATH $MAVEN_HOME/bin:/s2i:$PATH
-
-#ENV NPM_CONFIG_PREFIX /npm
-
-ENV M2_HOME /usr/lib/mvn
+ENV PATH $MAVEN_HOME/bin:/usr/libexec/s2i:$PATH
 
 RUN mkdir -p /deployments /npm /npm/lib/node_modules/@angular/cli/node_modules/node-sass/vendor  /.npm  /.config && chmod -R 777 /tmp /deployments /npm  /.npm /.config
 
-RUN wget http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz && \
-tar -zxvf apache-maven-$MAVEN_VERSION-bin.tar.gz && \
-rm apache-maven-$MAVEN_VERSION-bin.tar.gz && \
-mv apache-maven-$MAVEN_VERSION /usr/lib/mvn
+RUN cd /usr/local/src && wget http://www-us.apache.org/dist/maven/maven-3/3.5.4/binaries/apache-maven-3.5.4-bin.tar.gz && tar -xf apache-maven-3.5.4-bin.tar.gz && mv apache-maven-3.5.4/ apache-maven/ 
 
-RUN { \
-		echo '#!/bin/sh'; \
-		echo 'set -e'; \
-		echo; \
-		echo 'dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"'; \
-	} > /usr/local/bin/docker-java-home \
-	&& chmod +x /usr/local/bin/docker-java-home
+RUN yum install -y java-1.8.0-openjdk-devel
 
-ENV JAVA_HOME /usr/lib/jvm/java-1.8-openjdk
+COPY ./s2i/bin/ /usr/libexec/s2i/
 
-ENV PATH $PATH:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin
+RUN ls -al /usr/libexec/s2i/
 
-ENV JAVA_VERSION 8u181
+RUN chown -R 1001:1001 /usr/libexec/s2i/
 
-ENV JAVA_ALPINE_VERSION 8.181.13-r0
+RUN chmod -R 777 /usr/libexec/s2i/ /tmp /deployments /npm /.npm  /.config
 
-RUN set -x \
-	&& apk add --no-cache \
-		openjdk8="$JAVA_ALPINE_VERSION" \
-	&& [ "$JAVA_HOME" = "$(docker-java-home)" ]
-	
-	
-COPY ./s2i/bin/ / 
-
-RUN ls -al /s2i
-
-RUN chown -R 185:185 /s2i
-
-RUN chmod -R 777 /s2i /tmp /deployments /npm /.npm  /.config
-
-RUN ls -al /s2i
+RUN ls -al /usr/libexec/s2i/
 
 USER 185	
 
-RUN ls -al /s2i
+RUN ls -al /usr/libexec/s2i/
