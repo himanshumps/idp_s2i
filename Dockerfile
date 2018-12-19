@@ -31,7 +31,7 @@ RUN yum -y install tar gzip java java-devel bzip2 python python2 python-pip gcc-
 
 RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash -
 
-RUN yum install -y nodejs && yum clean all
+RUN yum install -y nodejs
 
 ENV JAVA_HOME /usr/lib/jvm/java-openjdk 
 
