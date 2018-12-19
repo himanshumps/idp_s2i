@@ -61,7 +61,7 @@ RUN set -x \
 
 #RUN sudo chmod -R 777 /npm && npm install -g @angular/cli@1.6.8 && npm link @angular/cli@1.6.8
 
-COPY ./s2i/bin/ /usr/local/s2i 
+COPY ./s2i/bin/ / 
 
 RUN chmod -R 777 /usr/local/s2i /tmp /deployments /npm /.npm  /.config
 
