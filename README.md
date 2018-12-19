@@ -1,2 +1,2 @@
-# idp_s2i
-IDP S2I Image Code
+# idpui-s2i
+IDP UI S2I Image
