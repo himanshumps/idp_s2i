@@ -1,8 +1,5 @@
 FROM alexsuch/angular-cli:6.2
 
-ENV \
-    PATH="$PATH:"/usr/local/s2i""
-	
 # Labels
 LABEL \
       description="Source To Image (S2I) image for IDP"  \
@@ -21,15 +18,20 @@ EXPOSE 8778 8080 8443
 
 ENV MAVEN_VERSION 3.5.4
 
-ENV NPM_CONFIG_PREFIX /npm
+ENV MAVEN_HOME /usr/lib/mvn
 
-ENV M2_HOME /usr/share/maven
+ENV PATH $MAVEN_HOME/bin:$PATH
+
+#ENV NPM_CONFIG_PREFIX /npm
+
+ENV M2_HOME /usr/lib/mvn
 
 RUN mkdir -p /deployments /npm /npm/lib/node_modules/@angular/cli/node_modules/node-sass/vendor /usr/local/s2i /.npm  /.config && chmod -R 777 /tmp /deployments /npm /usr/local/s2i /.npm /.config
 
-RUN curl -sSL http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar xzf - -C /usr/share \
-&& mv /usr/share/apache-maven-$MAVEN_VERSION /usr/share/maven \
-&& ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
+RUN wget http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz && \
+tar -zxvf apache-maven-$MAVEN_VERSION-bin.tar.gz && \
+rm apache-maven-$MAVEN_VERSION-bin.tar.gz && \
+mv apache-maven-$MAVEN_VERSION /usr/lib/mvn
 
 RUN { \
 		echo '#!/bin/sh'; \
