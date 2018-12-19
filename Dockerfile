@@ -27,7 +27,7 @@ ENV JAVA_HOME /usr/lib/jvm/java-openjdk
 
 ENV M2_HOME /usr/share/maven
 
-RUN mkdir -p /deployments /npm /npm/lib/node_modules/@angular/cli/node_modules/node-sass/vendor /usr/local/s2i && chmod -R 777 /tmp /deployments /npm /usr/local/s2i
+RUN mkdir -p /deployments /npm /npm/lib/node_modules/@angular/cli/node_modules/node-sass/vendor /usr/local/s2i /.npm && chmod -R 777 /tmp /deployments /npm /usr/local/s2i /.npm
 
 RUN curl -sSL http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar xzf - -C /usr/share \
 && mv /usr/share/apache-maven-$MAVEN_VERSION /usr/share/maven \
@@ -41,6 +41,6 @@ RUN yum -y install tar gzip java java-devel bzip2 python python2 python-pip gcc-
 
 COPY ./s2i/bin/ /usr/local/s2i 
 
-RUN chmod -R 777 /usr/local/s2i /tmp /deployments /npm
+RUN chmod -R 777 /usr/local/s2i /tmp /deployments /npm /.npm
 
 USER 185	
