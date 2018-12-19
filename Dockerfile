@@ -37,6 +37,8 @@ COPY ./s2i/bin/ /usr/local/s2i
 
 RUN mkdir /deployments /.npm
 
+RUN npm install -g @angular/cli@1.6.8 && npm link @angular/cli@1.6.8
+
 RUN chown -R 185:185 /usr/local/s2i /tmp /deployments /.npm && chmod -R 777 /usr/local/s2i /tmp /deployments /.npm
 
 USER 185	
