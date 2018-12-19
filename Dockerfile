@@ -37,6 +37,8 @@ COPY ./s2i/bin/ /usr/local/s2i
 
 RUN mkdir /deployments /.npm
 
+RUN chown -R root:root /usr/lib/node_modules /usr/lib/node_modules/@angular/
+
 USER root
 RUN npm install -g @angular/cli@1.6.8 && npm link @angular/cli@1.6.8
 
