@@ -1,5 +1,5 @@
 #!/bin/bash -e
 for entry in /deployments/*.jar
 do
-  java -jar $entry
+  java -Xms192m -Xmx768m -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:+UseParallelOldGC -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -XX:MaxMetaspaceSize=100m -XX:ParallelGCThreads=1 -Djava.util.concurrent.ForkJoinPool.common.parallelism=1 -XX:CICompilerCount=2 -XX:+ExitOnOutOfMemoryError ${JAVA_OPTIONS} -cp . -jar $entry
 done
